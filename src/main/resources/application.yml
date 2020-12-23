@@ -1,0 +1,27 @@
+spring:
+  ###dev  prod  test
+  profiles:
+    active: dev
+    include: wf,config
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  aop:
+    auto: true
+    proxy-target-class: true
+  resources:
+    static-locations: [classpath:/static/]
+  session:
+    store-type: redis
+  devtools:
+    restart:
+      enabled: true
+  freemarker:
+    check-template-location: false
+  #配置文件传输
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 300MB
+      file-size-threshold: 0
+      enabled: true

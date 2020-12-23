@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.168.1.51:3306/re_guarantee?serverTimezone=GMT%2B8
+    #      url: jdbc:mysql://192.168.1.51:3306/test
+    username: root
+    password: '!1VIMtech'
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 600000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    removeAbandoned: true
+    removeAbandonedTimeout: 1800
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    logAbandoned: true
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计 ，'wall'用于防火墙
+    filters: stat,slf4j
+    ## filters: stat,wall,slf4j   加上wall无法进行批量执行sql
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 50
+        max-wait: 5000
+        max-idle: 10
+        min-idle: 3
+    timeout: 50000
+
+server:
+  port: 8182
+  servlet:
+    context-path: /vfs
+  tomcat:
+    uri-encoding: UTF-8
+
+###文件上传路径
+uploadRootPath: d:/vimtech/load/
