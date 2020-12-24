@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration  scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 引入默认设置 -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <!-- 编码格式设置 -->
+    <property name="ENCODING" value="UTF-8" />
+    <!-- 日志文件的存储地址，由application.yml中的logging.path配置，根路径默认同项目路径 -->
+    <springProperty scope="context" name="LOG_HOME" source="logback.log-home"/>
+    <!-- 常规输出格式：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+    <property name="NORMAL_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50}.%method@%line - %msg%n"/>
+    <!-- 彩色输出格式：magenta：洋红，boldMagenta：粗红，yan：青色，·#══> -->
+    <property name="CONSOLE_LOG_PATTERN" value="%boldMagenta([%d{yyyy-MM-dd HH:mm:ss.SSS}]) %red([%thread]) %boldMagenta(%-5level) %boldGreen(%logger{20}.%method@%line) %magenta(·#═>) %cyan(%msg%n)"/>
+
+    <!--输出到控制台debug级别-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 输出到错误日志文件 -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/redis-error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${LOG_HOME}/%d{yyyy-MM}/%d{yyyy-MM-dd}/error/redis-error.%d{yyyy-MM-dd}_%i.log
+            </FileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>120</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${NORMAL_LOG_PATTERN}</pattern>
+            <charset>${ENCODING}</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 设置拦截的对象为ERROR级别日志 -->
+            <level>ERROR</level>
+            <!-- 当遇到了ERROR级别时，启用该段配置 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 没有遇到ERROR级别日志时，屏蔽该段配置 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 输出到提示日志文件 -->
+    <appender name="INFO_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/redis-info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${LOG_HOME}/%d{yyyy-MM}/%d{yyyy-MM-dd}/info/redis-info.%d{yyyy-MM-dd}_%i.log
+            </FileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${NORMAL_LOG_PATTERN}</pattern>
+            <charset>${ENCODING}</charset>
+        </encoder>
+    </appender>
+    <!-- 如果需要找问题，可以配成debug级别 -->
+    <logger name="org.springframework.web" level="INFO" />
+    <logger name="com.apache.ibatis" level="INFO"/>
+    <logger name="java.sql.Statement" level="INFO"/>
+    <logger name="java.sql.Connection" level="INFO"/>
+    <logger name="java.sql.PreparedStatement" level="INFO"/>
+    <logger name="com.baomidou.mybatisplus" level="WARN"/>
+
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+        <!-- 控制台打印debug日志，additivity=true 往上传记入日志文件 -->
+        <logger name="com.vimtech" level="DEBUG" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+    </springProfile>
+
+    <!-- 测试环境 -->
+    <springProfile name="test">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+        <logger name="com.baomidou.mybatisplus" level="DEBUG"/>
+        <logger name="com.apache.ibatis" level="DEBUG"/>
+        <logger name="java.sql.Statement" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+    </springProfile>
+
+    <!-- 生产环境 -->
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>

@@ -16,32 +16,32 @@ import javax.annotation.Resource;
 @RequestMapping(value = "/people")
 public class PeopleController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PeopleController.class);
 
     @Resource
     private PeopleServiceI peopleServiceI;
 
     @PostMapping(value = "add")
     public boolean addPeople(@RequestBody People people) {
-        logger.info("/-/-/-/-/新增ing");
+        LOGGER.info("/-/-/-/-/新增ing");
         return peopleServiceI.addPeople(people);
     }
 
     @PostMapping("/update")
     public boolean updatePeople(@RequestBody People people) {
-        logger.info("/-/-/-/-/更新ing");
+        LOGGER.info("/-/-/-/-/更新ing");
         return peopleServiceI.updatePeople(people);
     }
 
     @PostMapping("/delete")
-    public boolean deletePeople(@RequestBody int[] ids) {
-        logger.info("/-/-/-/-/更新ing");
+    public boolean deletePeople(@RequestParam int[] ids) {
+        LOGGER.info("/-/-/-/-/删除ing");
         return peopleServiceI.deletePeople(ids);
     }
 
-    @PostMapping("/selectById")
-    public People selectPeopleById(@RequestBody int id) {
-        logger.info("/-/-/-/-/更新ing");
+    @GetMapping("/selectById")
+    public People selectPeopleById(@RequestParam Integer id) {
+        LOGGER.info("/-/-/-/-/查询ing");
         return peopleServiceI.selectPeopleById(id);
     }
 

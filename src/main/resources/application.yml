@@ -1,5 +1,4 @@
 spring:
-  ###dev  prod  test
   profiles:
     active: dev
     include: wf,config
@@ -25,3 +24,12 @@ spring:
       max-request-size: 300MB
       file-size-threshold: 0
       enabled: true
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*Mapper.xml,sqlservermapper/**/*Mapper.xml,oraclemapper/**/*Mapper.xml,classpath*:com/**/*Mapper.xml
+  config-location: classpath:config/mybatis-config.xml
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: NOT_NULL
+      # 驼峰下划线转换
+      db-column-underline: true

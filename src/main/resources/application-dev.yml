@@ -1,10 +1,9 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.168.1.51:3306/re_guarantee?serverTimezone=GMT%2B8
-    #      url: jdbc:mysql://192.168.1.51:3306/test
+    url: jdbc:mysql://192.168.20.128:3306/test?serverTimezone=GMT%2B8
     username: root
-    password: '!1VIMtech'
+    password: 'Vimtech_102422222'
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 1
     minIdle: 3
@@ -29,7 +28,7 @@ spring:
     filters: stat,slf4j
     ## filters: stat,wall,slf4j   加上wall无法进行批量执行sql
   redis:
-    host: 192.168.20.128
+    host: 192.168.20.12811
     port: 6379
     password:
     jedis:
@@ -43,9 +42,6 @@ spring:
 server:
   port: 8182
   servlet:
-    context-path: /vfs
+    context-path: /redis
   tomcat:
     uri-encoding: UTF-8
-
-###文件上传路径
-uploadRootPath: d:/vimtech/load/

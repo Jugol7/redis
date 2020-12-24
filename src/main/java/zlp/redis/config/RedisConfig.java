@@ -18,34 +18,16 @@ import redis.clients.jedis.JedisPoolConfig;
 @Component
 public class RedisConfig {
 
-    @Value("${spring.redis.maxIdle}")
+    @Value("${spring.redis.jedis.pool.max-idle}")
     private Integer maxIdle;
 
-    @Value("${spring.redis.maxTotal}")
+    @Value("${spring.redis.jedis.pool.min-idle}")
     private Integer maxTotal;
 
-    @Value("${spring.redis.maxWaitMillis}")
+    @Value("${spring.redis.jedis.pool.max-wait}")
     private Integer maxWaitMillis;
 
-    @Value("${spring.redis.minEvictableIdleTimeMillis}")
-    private Integer minEvictableIdleTimeMillis;
-
-    @Value("${spring.redis.numTestsPerEvictionRun}")
-    private Integer numTestsPerEvictionRun;
-
-    @Value("${spring.redis.timeBetweenEvictionRunsMillis}")
-    private long timeBetweenEvictionRunsMillis;
-
-    @Value("${spring.redis.testOnBorrow}")
-    private boolean testOnBorrow;
-
-    @Value("${spring.redis.testWhileIdle}")
-    private boolean testWhileIdle;
-
-    @Value("${spring.redis.cluster.max-redirects}")
-    private Integer mmaxRedirectsac;
-
-    @Value("${redis.password}")
+    @Value("${spring.redis.password}")
     private String redisPwd;
 
     /**
@@ -62,15 +44,15 @@ public class RedisConfig {
         // 最大建立连接等待时间
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
         // 逐出连接的最小空闲时间 默认1800000毫秒(30分钟)
-        jedisPoolConfig.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+        // jedisPoolConfig.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
         // 每次逐出检查时 逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3
-        jedisPoolConfig.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
+        // jedisPoolConfig.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
         // 逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
-        jedisPoolConfig.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+        // jedisPoolConfig.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
         // 是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个
-        jedisPoolConfig.setTestOnBorrow(testOnBorrow);
+        // jedisPoolConfig.setTestOnBorrow(testOnBorrow);
         // 在空闲时检查有效性, 默认false
-        jedisPoolConfig.setTestWhileIdle(testWhileIdle);
+        jedisPoolConfig.setTestWhileIdle(true);
         return jedisPoolConfig;
     }
 
