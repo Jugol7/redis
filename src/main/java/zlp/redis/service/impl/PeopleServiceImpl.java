@@ -1,10 +1,12 @@
 package zlp.redis.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import zlp.redis.dao.IPeopleDao;
 import zlp.redis.entity.People;
 import zlp.redis.service.PeopleServiceI;
 
@@ -15,7 +17,7 @@ import javax.annotation.Resource;
  * @date 2019-11-06 18:42
  */
 @Service
-public class PeopleServiceImpl implements PeopleServiceI {
+public class PeopleServiceImpl extends ServiceImpl<IPeopleDao, People> implements PeopleServiceI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PeopleServiceImpl.class);
 
@@ -26,7 +28,7 @@ public class PeopleServiceImpl implements PeopleServiceI {
     public boolean addPeople(People people) {
         try {
             if (people != null) {
-                //这里要 people.toString()
+
                 redisTemplate.opsForValue().set(String.valueOf(people.getId()), people);
                 return true;
             }
@@ -39,7 +41,7 @@ public class PeopleServiceImpl implements PeopleServiceI {
     @Override
     public boolean updatePeople(People people) {
         try {
-            //这里要 people.toString()
+
             redisTemplate.opsForValue().set(String.valueOf(people.getId()), people);
             return true;
         } catch (Exception e) {

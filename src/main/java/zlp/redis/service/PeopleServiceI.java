@@ -1,12 +1,13 @@
 package zlp.redis.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import zlp.redis.entity.People;
 
 /**
  * @author zlp
  * @date 2019-11-06 18:42
  */
-public interface PeopleServiceI {
+public interface PeopleServiceI extends IService<People> {
     /**
      * 新增
      * @param people
