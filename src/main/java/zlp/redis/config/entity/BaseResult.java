@@ -1,5 +1,7 @@
 package zlp.redis.config.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,8 @@ import java.io.Serializable;
  * @Description:
  * @Date 15:12:43 2020/12/25/0025
  */
-public class BaseResult<T> implements Serializable {
+@Data
+public class BaseResult<T extends Serializable> implements Serializable {
 
     private Integer code;
     private String message;
