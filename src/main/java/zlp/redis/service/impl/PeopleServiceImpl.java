@@ -28,7 +28,6 @@ public class PeopleServiceImpl extends ServiceImpl<IPeopleDao, People> implement
     public boolean addPeople(People people) {
         try {
             if (people != null) {
-
                 redisTemplate.opsForValue().set(String.valueOf(people.getId()), people);
                 return true;
             }
