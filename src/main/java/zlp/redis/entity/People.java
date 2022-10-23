@@ -2,29 +2,36 @@ package zlp.redis.entity;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * @author zlp
  * @date 2019-11-06 18:10
  */
-public class People {
-    /**
-     *
-     */
+public class People implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    /** 编号 */
+    /**
+     * 编号
+     */
     private int id;
-    /** 姓名 */
+    /**
+     * 姓名
+     */
     private String name;
 
-    /** 年龄 */
+    /**
+     * 年龄
+     */
     private int age;
 
-    public People(){
+    public People() {
     }
 
 
     /**
      * 获取编号
+     *
      * @return id
      */
     public int getId() {
@@ -33,6 +40,7 @@ public class People {
 
     /**
      * 设置编号
+     *
      * @param id
      */
     public void setId(int id) {
@@ -41,6 +49,7 @@ public class People {
 
     /**
      * 获取姓名
+     *
      * @return name
      */
     public String getName() {
@@ -49,25 +58,31 @@ public class People {
 
     /**
      * 设置姓名
+     *
      * @param name
      */
     public void setName(String name) {
         this.name = name;
     }
+
     /**
      * 获取年龄
-     * @return  age
+     *
+     * @return age
      */
     public int getAge() {
         return age;
     }
+
     /**
      * 设置年龄
+     *
      * @param int age
      */
     public void setAge(int age) {
         this.age = age;
     }
+
     /**
      *
      */
